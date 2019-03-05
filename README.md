@@ -1,8 +1,17 @@
 ![FFPopup](/Resources/ffpopup-logo.png)
 
 <p align="center">
+    <a href="https://travis-ci.org/JonyFang/FFPopup">
+        <img src="https://travis-ci.org/JonyFang/FFPopup.svg?branch=master" alt="CI Status">
+    </a>
+    <a href="https://codecov.io/gh/JonyFang/FFPopup">
+    	<img src="https://codecov.io/gh/JonyFang/FFPopup/branch/master/graph/badge.svg" alt="Codecov Status">
+	</a>
 	<a href="http://cocoapods.org/pods/FFPopup">
         <img src="https://img.shields.io/cocoapods/v/FFPopup.svg" alt="Cocoapods Version">
+    </a>
+    <a href="https://github.com/Carthage/Carthage">
+        <img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible">
     </a>
     <a href="http://cocoapods.org/pods/FFPopup">
         <img src="https://img.shields.io/cocoapods/p/FFPopup.svg" alt="Platform">
@@ -20,6 +29,25 @@
 
 <p align="center">FFPopup is a lightweight library for presenting custom views as a popup.</p>
 
+<table>
+<tr>
+<th>Bounce from Top & Bounce to Bottom</th>
+<th>Bounce from Top & Bounce to Top</th>
+<th>Bounce in & Bounce out</th>
+<th>Grow in & Shrink out</th>
+<th>Bounce from Bottom & Slide to Bottom</th>
+<th>Slide from Bottom & Slide to Bottom</th>
+</tr>
+<tr>
+<td><img src="/Resources/001_bounce_from_top&Bounce_to_bottom.gif"/></td>
+<td><img src="/Resources/002_bounce_from_top&bounce_to_top.gif"/></td>
+<td><img src="/Resources/003_bounce_in&bounce_out.gif"/></td>
+<td><img src="/Resources/004_grow_in&shrink_out.gif"/></td>
+<td><img src="/Resources/005_bounce_from_bottom&slide_to_bottom.gif"/></td>
+<td><img src="/Resources/006_slide_from_bottom&slide_to_bottom.gif"/></td>
+</tr>
+</table>
+
 ## Features
 
 - Support several popup show types
@@ -28,8 +56,7 @@
 	- [x] Grow In
 	- [x] Shrink In
 	- [x] Slide In from top, bottom, left, right
-	- [x] Bounce In
-	- [x] Bounce In from top, bottom, left, right
+	- [x] Bounce In from top, bottom, left, right, center
 	- [ ] Support custom
 
 - Support several popup dismiss types
@@ -38,24 +65,23 @@
 	- [x] Grow Out
 	- [x] Shrink Out
 	- [x] Slide Out to top, bottom, left, right
-	- [x] Bounce Out
-	- [x] Bounce Out to top, bottom, left, right
+	- [x] Bounce Out to top, bottom, left, right, center
 	- [ ] Support custom
 
 - Layout the popup in the horizontal direction
 	- [x] Left
-	- [x] Left of center
-	- [x] Center
-	- [x] Right of center
 	- [x] Right
+	- [x] Center
+	- [x] Left of center
+	- [x] Right of center
 	- [ ] Support custom
 
 - Layout the popup in the vertical direction
 	- [x] Top
-	- [x] Above center
-	- [x] Center
-	- [x] Below center
 	- [x] Bottom
+	- [x] Center
+	- [x] Above center
+	- [x] Below center
 	- [ ] Support custom
 
 - Controlled whether to allow interaction with the underlying view
@@ -80,22 +106,29 @@ To run the `Example` project, clone the Repo, and start `Example` in Xcode.
 ```bash
 $ git clone https://github.com/JonyFang/FFPopup.git
 $ cd FFPopup/Example
+$ pod install
 $ open FFPopup_Example.xcworkspace
 ```
 
 ## Installation
 
+There are three ways to use `FFPopup` in your project:
+
+- Installation with `CocoaPods`
+- Installation with `Carthage`
+- `Manually` install
+
 #### CocoaPods
 
 [CocoaPods](http://cocoapods.org/) is a dependency manager, which automates and simplifies the process of using 3rd-party libraries like `FFPopup` in your projects. First, add the following line to your [Podfile](http://guides.cocoapods.org/using/using-cocoapods.html):
 
-```bash
+```ruby
 pod 'FFPopup'
 ```
 
-If you want to use the latest features of FFPopup use normal external source dependencies.
+If you want to use the latest features of `FFPopup` use normal external source dependencies.
 
-```bash
+```ruby
 pod 'FFPopup', :git => 'https://github.com/JonyFang/FFPopup.git'
 ```
 
@@ -104,8 +137,47 @@ This pulls from the master branch directly.
 Second, install `FFPopup` into your project:
 
 ```bash
-pod install
+$ pod install
 ```
+
+#### Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+You can install Carthage with [Homebrew](http://brew.sh/) using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To integrate `FFPopup` into your Xcode project using Carthage, specify it in your `Cartfile`:
+
+```bash
+github "JonyFang/FFPopup"
+```
+
+Run the following command to build the framework:
+
+```bash
+$ carthage update
+```
+
+Drag the built `FFPopup.framework` binaries from `Carthage/Build/iOS` into your application’s Xcode project.
+
+On your application targets’ `Build Phases` settings tab, click the `+ icon` and choose `New Run Script Phase`. Create a `Run Script` in which you specify your shell (ex: `/bin/sh`), add the following contents to the script area below the shell:
+
+```sh
+/usr/local/bin/carthage copy-frameworks
+```
+
+Add the following paths to the frameworks you want to use under `Input Files`.
+
+```
+$(SRCROOT)/Carthage/Build/iOS/FFPopup.framework
+```
+
+For an in depth guide, read on from [Adding frameworks to an application](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application)
 
 #### Manually
 
@@ -119,7 +191,7 @@ Alternatively you can directly add the `FFPopup.h` and `FFPopup.m` source files 
 
 Even though `FFPopup` is written in Objective-C, it can be used in Swift with no hassle. If you use [CocoaPods](http://cocoapods.org/) add the following line to your [Podfile](http://guides.cocoapods.org/using/using-cocoapods.html):
 
-```bash
+```ruby
 use_frameworks!
 ```
 
@@ -351,21 +423,48 @@ Create a new popup with custom values.
 
 ## TODO List
 
-This is the to-do list for the FFPopup project. You can join us to become a contributor.
+This is the to-do list for the `FFPopup` project. You can join us to become a contributor.
 
 - [ ] Support blur option for background mask
 - [ ] Support for keyboard show/hide
 - [ ] Support for drag-to-dismiss
 
-See the [CONTRIBUTING](/docs/CONTRIBUTING.md) file for contributing guidelines.
+See the [CONTRIBUTING](./CONTRIBUTING.md) file for contributing guidelines.
 
 ## Live Demo
 
-My app [Time Card -Countdown](https://itunes.apple.com/cn/app/%E6%97%B6%E9%97%B4%E5%8D%A1-%E7%B2%BE%E8%87%B4%E7%9A%84%E7%BA%AA%E5%BF%B5%E6%97%A5%E5%8A%A9%E6%89%8B/id1347998487?mt=8) (Never Forget Important Days) is using FFPopup. You can download it and try it on your multiple devices to experience the effect.
+My app [Time Card -Countdown](https://itunes.apple.com/cn/app/%E6%97%B6%E9%97%B4%E5%8D%A1-%E7%B2%BE%E8%87%B4%E7%9A%84%E7%BA%AA%E5%BF%B5%E6%97%A5%E5%8A%A9%E6%89%8B/id1347998487?mt=8) (Never Forget Important Days) is using `FFPopup`. You can download it and try it on your multiple devices to experience the effect.
 
 <a href="https://itunes.apple.com/cn/app/%E6%97%B6%E9%97%B4%E5%8D%A1-%E7%B2%BE%E8%87%B4%E7%9A%84%E7%BA%AA%E5%BF%B5%E6%97%A5%E5%8A%A9%E6%89%8B/id1347998487?mt=8">
   <img src="/Resources/download-on-the-appstore.png">
 </a>
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [Contribute](./CONTRIBUTING.md)
+
+<a href="https://opencollective.com/ffpopup#backer"><img src="https://opencollective.com/ffpopup/contributors.svg?width=890" /></a>
+
+## Backers
+
+Thank you to all our backers! Your support is really important for the project and encourages us to continue. 🙏 [Become a backer](https://opencollective.com/ffpopup#backer)
+
+<a href="https://opencollective.com/ffpopup#backers" target="_blank"><img src="https://opencollective.com/ffpopup/backers.svg?width=890"></a>
+
+## Sponsors
+
+Thank you to all our sponsors! [Become a sponsor](https://opencollective.com/ffpopup#sponsor)
+
+<a href="https://opencollective.com/ffpopup/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/1/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/2/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/3/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/4/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/5/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/6/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/ffpopup/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ffpopup/sponsor/9/avatar.svg"></a>
 
 ## License
 
